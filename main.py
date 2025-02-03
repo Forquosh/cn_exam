@@ -5,9 +5,9 @@ import time
 # Colors
 class colors:
     CORRECT = '\033[92m'
-    INCORRECT = '\033[91m'
+    INCORRECT = FAILED = '\033[91m'
     NORMAL = '\033[0m'
-    SCORE = '\033[94m'
+    PASSED = '\033[94m'
 
 print("\nWelcome to the Computer Networks quiz!")
 print("You will be asked a series of multiple choice questions, and you must answer them correctly.")
@@ -70,7 +70,11 @@ while True:
 
     # Convert user score to percentage
     score = score / nr_questions * 100
-    print(colors.SCORE + "You got " + str(score) + "%\n")
+    if(score > 50):
+        print(colors.PASSED + "\nYou got " + str(score) + "%" + " of questions right! Passed!\n")
+    else:
+        print(colors.FAILED + "\nYou got " + str(score) + "%" + " of questions right. You failed.\n")
+
 
     # Ask user to review mistakes
     user_input = input(colors.NORMAL + "Do you want to review your mistakes?(y/n): ")
@@ -79,7 +83,7 @@ while True:
             print(colors.NORMAL + q['question'])
             for i in range(len(q['answers'])):
                 print(chr(i + 97) + ") " + q['answers'][i])
-            print("Your answer was " + colors.INCORRECT + answer)
+            print("Your answer was: " + colors.INCORRECT + answer)
             print(colors.NORMAL + "The correct answer was: " + colors.CORRECT + q['correct'] + '\n')
 
     # Ask user if they want to play again
