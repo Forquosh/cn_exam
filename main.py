@@ -34,14 +34,12 @@ while True:
         continue
 
     score = 0
-    indexes = [i for i in range(len(questions))]
     mistakes = []
     for i in range(nr_questions):
         print(colors.NORMAL + "\n-- Question " + str(i + 1) + "/" + str(nr_questions) + " --")
 
         # Select a random question
-        index = random.choice(indexes)
-        q = questions[index]
+        q = random.choice(questions)
 
         # Removes the selected question from the set of questions
         # If user chooses to play again, the already answered questions won't get chosen again
@@ -55,7 +53,7 @@ while True:
             # For each question display the answers, and in front of each one, display the corresponding character
             # first answer will correspond to 'a', the second to 'b' etc.
             for i in range(len(q['answers'])):
-                print(chr(i + 97) + ") " + q['answers'][i])
+                print(chr(ord('a') + i) + ") " + q['answers'][i])
         
         # Get user input
         answer = input("Your answer: ")
@@ -70,10 +68,10 @@ while True:
 
     # Convert user score to percentage
     score = score / nr_questions * 100
-    if(score > 50):
-        print(colors.PASSED + "\nYou got " + str(score) + "%" + " of questions right! Passed!\n")
+    if(score >= 50):
+        print(colors.PASSED + "\nYou got " + str(score) + "%" + " of questions right!\n You passed! :D\n")
     else:
-        print(colors.FAILED + "\nYou got " + str(score) + "%" + " of questions right. You failed.\n")
+        print(colors.FAILED + "\nYou only got " + str(score) + "%" + " of questions right.\n You failed. :/\n")
 
 
     # Ask user to review mistakes
@@ -82,16 +80,16 @@ while True:
         for (q, answer) in mistakes:
             print(colors.NORMAL + q['question'])
             for i in range(len(q['answers'])):
-                print(chr(i + 97) + ") " + q['answers'][i])
+                print(chr(ord('a') + i) + ") " + q['answers'][i])
             print("Your answer was: " + colors.INCORRECT + answer)
             print(colors.NORMAL + "The correct answer was: " + colors.CORRECT + q['correct'] + '\n')
 
     # Ask user if they want to play again
-    user_input = input(colors.NORMAL + "Do you want to play again? (y/n): ")
+    user_input = input(colors.NORMAL + "Do you want to play again?(y/n): ")
     if user_input == "n":
         print("You shall (definitely) pass!")
-        time.sleep(0.5)
+        time.sleep(0.75)
         break
     else:
-        print("Starting again...")
-        time.sleep(1.5)
+        print("Here we go again...")
+        time.sleep(1.25)
